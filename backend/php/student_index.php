@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 include("config.php");
 // $roll = $_REQUEST['roll'];
 
@@ -13,9 +12,4 @@ include("config.php");
 
 print_r($_POST);
 
-=======
-    echo '<pre>';
-        print_r($_POST);
-        '<pre>';
->>>>>>> c5e32074c9b80816832b98a9212a1f5f088850e6
 ?>

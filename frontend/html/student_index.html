@@ -58,8 +58,13 @@
   </div>
 </body>
 <script src="../js/student_index.js"></script>
-<script>
-  $('#form').submit
-</script>
+<!-- <script>
+  $('#form').submit((e)=>{
+    e.preventDefault();
+
+    const formData = new FormData(document.getElementById("form"));
+    console.log([...formData.entries()]);
+  })
+</script> -->
 
 </html>

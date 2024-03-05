@@ -4,6 +4,6 @@
 /* .roll_number .invalid-feedback, .otp .invalid-feedback{
     display: block;
 } */
-/* .otp, .radio {
+.otp, .radio {
     display: none;
-} */
+}

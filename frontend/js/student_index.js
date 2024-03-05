@@ -21,16 +21,17 @@ $("#form").submit(function (e) {
 
 
     // const formdata = new formdata(document.getElementById("form"));
-    var formdata = new formdata(document.getElementById("form"));
-    console.log(formdata);
+    var formData = new FormData(document.getElementById("form"));
 
-    // $.ajax({
-    //     url: "../../backend/php/student_index.php",
-    //     type: "POST",
-    //     data: formdata,
-    //     dataType: "json",
-    //     success: function (res) {
-    //         console.log(res);
-    //     }
-    // })
+    $.ajax({
+        type: "POST",
+        url: "../../backend/php/student_index.php",
+        data: formData,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        cache: false,
+    }).success(function (data) {
+        console.log(typeof(data));
+    })
 })

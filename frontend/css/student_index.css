@@ -1,0 +1,9 @@
+/* .radio{
+    display: none;
+} */
+/* .roll_number .invalid-feedback, .otp .invalid-feedback{
+    display: block;
+} */
+.otp, .radio {
+    /* display: none; */
+}

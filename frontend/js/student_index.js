@@ -21,7 +21,10 @@ $("#form").submit(function (e) {
 
 
     // const formdata = new formdata(document.getElementById("form"));
-    var formData = new FormData(document.getElementById("form"));
+    const formData = new FormData(document.getElementById("form"));
+    formData.forEach((value, key)=>{
+        console.log(`${key}: ${value}`);
+    })
 
     $.ajax({
         type: "POST",
@@ -31,7 +34,30 @@ $("#form").submit(function (e) {
         processData: false,
         contentType: false,
         cache: false,
-    }).success(function (data) {
-        console.log(typeof(data));
+        success: function (data) {
+            if (data.status === 0) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Roll Number Not Found',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+            }
+
+            if (data.status === 200) {
+                document.getElementById("radio").style.display = "block";
+                document.getElementById("email").innerHTML = data.email;
+                document.getElementById("mobile").innerHTML = data.mobile;
+
+                document.getElementById('radio1').value = data.email;
+                document.getElementById('name').value = data.name;
+            }
+        }
+        // ,
+        // error: function(xhr, status, error) {
+        //     console.log(xhr.responseText);
+        //     console.log(status);
+        //     console.log(error);
+        // }
     })
 })

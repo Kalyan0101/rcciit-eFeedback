@@ -4,6 +4,9 @@
 /* .roll_number .invalid-feedback, .otp .invalid-feedback{
     display: block;
 } */
-.otp, .radio {
+html, body{
+    background-color: darkgrey;
+}
+#otp, #radio {
     display: none;
 }

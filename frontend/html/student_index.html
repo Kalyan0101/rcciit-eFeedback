@@ -5,14 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Login Page || RCCIIT</title>
+  <!-- bootstrap CDN of CSS & JS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
-  
-    <script src="../../jquery-3.7.1.min.js"></script>
-
+  <!-- sweet alert CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- jquery file for AJAX -->
+  <script src="../../jquery-3.7.1.min.js"></script>
+  <!-- defined CSS file -->
   <link rel="stylesheet" href="../css/student_index.css">
 </head>
 
@@ -22,20 +25,25 @@
 
       <!-- <form id="form" action="../../backend/php/student_index.php" method="post"> -->
       <form id="form">
+        <!-- hidden field -->
+        <input type="hidden" name="name" id="name">
         <!-- enter roll number -->
         <div class="roll_number mb-3">
           <label for="roll" class="form-label">Collage Roll Number: </label>
-          <input type="text" class="form-control" id="roll" name="roll" placeholder="Enter Your Collage Roll Number" aria-describedby="emailHelp">
-          <div class="invalid-feedback">!!!Invalid Roll  Number.</div>
+          <input type="text" class="form-control" id="roll" name="roll" placeholder="Enter Your Collage Roll Number"
+            aria-describedby="emailHelp">
+          <div class="invalid-feedback">!!!Invalid Roll Number.</div>
         </div>
         <!-- otp mode -->
-        <div class="radio pb-3">
+        <div id="radio" class="pb-3">
           <div class="form-check">
-            <label class="form-check-label" for="radio1">(Recomended) Login Using OTP Sent to your Registered Email Address: <span id="email"></span></label>
+            <label class="form-check-label" for="radio1">(Recomended) Login Using OTP Sent to your Registered Email
+              Address: <span id="email"></span></label>
             <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1">
           </div>
           <div class="form-check">
-            <label class="form-check-label" for="radio2">Login Using OTP sent to your Registered Mobile Number: <span id="mobile"></span></label>
+            <label class="form-check-label" for="radio2">Login Using OTP sent to your Registered Mobile Number: <span
+                id="mobile"></span></label>
             <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">
           </div>
           <div class="form-check">
@@ -44,7 +52,7 @@
           </div>
         </div>
         <!-- enter otp -->
-        <div class="otp input-group mb-3">
+        <div id="otp" class="input-group mb-3">
           <input type="number" class="form-control" id="check_otp" name="check_otp" placeholder="Enter Your OTP">
           <div class="invalid-feedback">!!!Invalid OTP.</div>
         </div>
@@ -58,13 +66,5 @@
   </div>
 </body>
 <script src="../js/student_index.js"></script>
-<!-- <script>
-  $('#form').submit((e)=>{
-    e.preventDefault();
-
-    const formData = new FormData(document.getElementById("form"));
-    console.log([...formData.entries()]);
-  })
-</script> -->
 
 </html>

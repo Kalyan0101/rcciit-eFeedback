@@ -31,7 +31,12 @@ $("#form").submit(function (e) {
         processData: false,
         contentType: false,
         cache: false,
-    }).success(function (data) {
-        console.log(typeof(data));
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (data) {
+            console.log('An error occurred.');
+            console.log(data);
+        }
     })
 })

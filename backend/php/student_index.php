@@ -27,6 +27,7 @@ if(isset($_REQUEST['roll']) && $_REQUEST['roll']){
     }else{
         $response['status'] = 0;
     }
+
+    echo json_encode($response);
 }
-echo json_encode($response);
 ?>

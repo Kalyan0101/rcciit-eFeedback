@@ -7,5 +7,11 @@
         require('./PHPExcel/PHPExcel/IOFactory.php');
 
         $file = $_FILES['file']['tmp_name'];
+
+        $obj = PHPExcel_IOFactory::load($file);
+        foreach($obj->getWorkSheetIterator()  as $data){
+            echo '<pre>';
+            print_r($data);
+        }
     }
 ?>

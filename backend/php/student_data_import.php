@@ -1,17 +1,46 @@
 <?php
-// echo '<pre>';
-// print_r($_REQUEST);
-// print_r($_FILES);
-    if(isset($_REQUEST['submit'])){
-        require('./PHPExcel/PHPExcel.php');
-        require('./PHPExcel/PHPExcel/IOFactory.php');
+require './phpspreadsheet/vendor/autoload.php';
 
-        $file = $_FILES['file']['tmp_name'];
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-        $obj = PHPExcel_IOFactory::load($file);
-        foreach($obj->getWorkSheetIterator()  as $data){
-            echo '<pre>';
-            print_r($data);
+if(isset($_REQUEST['btn'])){
+    // echo "<pre>";
+    // print_r($_FILES['file']);
+    
+    // die;
+    $fileName = $_FILES['file']['name'];
+    $check = explode(".", $fileName);
+    $fileExt = end($check);
+
+    if($fileExt == "xlsx"){
+        $inputFileName = $_FILES['file']['tmp_name'];
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFileName);
+        $data = $spreadsheet->getActiveSheet()->toArray();
+
+        foreach ($data as $row) {
+            $name = $row[0];
+            $roll = $row[1];
+            $year = $row[2];
         }
     }
+
+
+
+}
+
+
+
+
+
+
+
+
+die;
+
+
+
+
+$writer = new Xlsx($spreadsheet);
+$writer->save('hello world.xlsx');
 ?>

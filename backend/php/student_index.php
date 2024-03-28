@@ -1,5 +1,5 @@
 <?php
-include("config.php");
+include("./config.php");
 include("./PHPMailer/mailcode.php");
 
 // response JSON obbject

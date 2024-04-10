@@ -22,9 +22,9 @@ $("#form").submit(function (e) {
 
     // const formdata = new formdata(document.getElementById("form"));
     const formData = new FormData(document.getElementById("form"));
-    formData.forEach((value, key)=>{
-        console.log(`${key}: ${value}`);
-    })
+    // formData.forEach((value, key)=>{
+    //     console.log(`${key}: ${value}`);
+    // })
 
     $.ajax({
         type: "POST",
@@ -45,19 +45,29 @@ $("#form").submit(function (e) {
             }
 
             if (data.status === 200) {
+                // change visibility
                 document.getElementById("radio").style.display = "block";
+
+                // manipulate DOM for showing student data fetched form database
                 document.getElementById("email").innerHTML = data.email;
                 document.getElementById("mobile").innerHTML = data.mobile;
 
-                document.getElementById('radio1').value = data.email;
+                // set tag values
                 document.getElementById('name').value = data.name;
+                document.getElementById('radio1').value = data.email;
+                document.getElementById('radio2').value = data.mobile;
+                
+            }
+
+            if(data.status === 100){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Mail Send Sucessfull",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             }
         }
-        // ,
-        // error: function(xhr, status, error) {
-        //     console.log(xhr.responseText);
-        //     console.log(status);
-        //     console.log(error);
-        // }
     })
 })

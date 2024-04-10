@@ -6,15 +6,16 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 //Load Composer's autoloader
-require 'vendor/autoload.php';
-function sendmail($mail_address, $otp, $name){
+require './composer/vendor/autoload.php';
 
 //Create an instance; passing `true` enables exceptions
-$mail = new PHPMailer(true);
+function sendMail($otp, $stu_name, $stu_mail){
+
+    $mail = new PHPMailer(true);
 
     try {
         //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -24,20 +25,23 @@ $mail = new PHPMailer(true);
         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
-        $mail->setFrom('naskarkalyan1999@gmail.com', 'Admin');
-        $mail->addAddress($mail_address);     //Add a recipient
+        $mail->setFrom('naskarkalyan1999@gmail.com', 'RCCIIT e-Feedback');
+        $mail->addAddress($stu_mail, $stu_name);     //Add a recipient
+
+        //Attachments
+        // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+        // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'OTP for e-Feedback';
-        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-        $mail->AltBody = 'Your OTP is: <b>'.$otp.'</b>';
+        $mail->Subject = 'e-Feedback OTP';
+        $mail->Body    = 'Hello '.$stu_name.'<br> Your OTP for e_Feedback<br><b><span style="color: green; font-size: large;">'.$otp.'<Span></b>';
 
         $mail->send();
-        echo 'Message has been sent';
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        return 0;
     }
+    return 1;
 }
 ?>
-

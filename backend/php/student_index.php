@@ -3,7 +3,7 @@ include("./config.php");
 include("./phpmailer.php");
 
 // response JSON obbject
-$response['status'] = 404;
+$response['status'] = 404;      // 404 mean student data not found
 $response['email'] = 'null';
 $response['mobile'] = 'null';
 $response['name'] = 'null';
@@ -49,14 +49,16 @@ if(isset($_REQUEST['optradio']) && $_REQUEST['optradio']){
 
         $otp = getotp();
 
-        if(sendMail($otp, $stu_name, $stu_mail)){
+        $result = sendMail($otp, $stu_name, $stu_mail);
+
+        if($result){
             // status code 100 mean mail send successful
             $response['status'] = 100;            
             $_SESSION['sendotp'] = $otp;
             
         }else{
             // status code 104 mean mail not send
-            $response['status'] = 104;
+            $response = ['status' => 104];
         }
     }
 

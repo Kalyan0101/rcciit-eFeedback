@@ -39,7 +39,7 @@ function sendMail($otp, $stu_name, $stu_mail){
 
         $mail->send();
     } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";  // this line of code is preventing return to send data properly ***must not be uncomment***
         return 0;
     }
     return 1;

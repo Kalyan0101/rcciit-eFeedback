@@ -7,6 +7,6 @@
 html, body{
     background-color: darkgrey;
 }
-#otp, #radio {
+#otp, #radio, #btn {
     display: none;
 }

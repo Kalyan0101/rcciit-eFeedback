@@ -8,10 +8,19 @@ $response['email'] = 'null';
 $response['mobile'] = 'null';
 $response['name'] = 'null';
 
-if(isset($_REQUEST['roll']) && $_REQUEST['roll']){
-    // print_r($_REQUEST['roll']);
+// for debugging purpose >>>>
 
-    $roll = $_REQUEST['roll'];
+// ob_start(); // starts output buffering
+// print_r($_POST); 
+// $content = ob_get_clean(); // gets the contents of the output buffer and then cleans it
+// file_put_contents('request_log.txt', $content); // writes the content to a file named ‘request_log.txt’.
+
+// <<<<
+
+if(isset($_POST['roll']) && $_POST['roll']){
+    // print_r($_POST['roll']);
+
+    $roll = $_POST['roll'];
 
     // check roll number exists or not
     $sql = "SELECT * FROM student WHERE s_roll = '$roll'";
@@ -37,13 +46,9 @@ if(isset($_REQUEST['roll']) && $_REQUEST['roll']){
 
 
 // sending otp via selected mode (email)
-if(isset($_REQUEST['optradio']) && $_REQUEST['optradio']){
-    $stu_mail = $_REQUEST['optradio'];
-    $stu_name = $_REQUEST['name'];
-    
-    // echo"<pre>";
-    // print_r($_REQUEST);
-    // die;
+if(isset($_POST['otpMode']) && $_POST['otpMode']){
+    $stu_mail = $_POST['otpMode'];
+    $stu_name = $_POST['name'];
 
     if(strpbrk($stu_mail, "@")){
 

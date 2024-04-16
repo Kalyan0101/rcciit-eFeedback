@@ -1,0 +1,20 @@
+/* .radio{
+    display: none;
+} */
+/* .roll_number .invalid-feedback, .otp .invalid-feedback{
+    display: block;
+} */
+html, body{
+    background-color: darkgrey;
+    position: relative;
+}
+#otp, #radio, #submit_btn, #reset_btn {
+    display: none;
+}
+.loading{
+    z-index: 99999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(100%);
+}

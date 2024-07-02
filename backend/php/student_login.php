@@ -54,10 +54,9 @@ if(isset($_POST['otpMode']) && $_POST['otpMode']){
 
         $otp = getotp();
 
-        // $result = sendMail($otp, $stu_name, $stu_mail);
+        $result = sendMail($otp, $stu_name, $stu_mail);
 
-        // if($result){
-        if(1){
+        if($result){
             // status code 100 mean mail send successful
             $response['status'] = 100;            
             $response['sendotp'] = $otp;

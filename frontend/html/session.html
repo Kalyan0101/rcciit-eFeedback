@@ -1,4 +1,3 @@
-<?php include("../../backend/php/config.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,13 +7,11 @@
     <title>Session</title>
 </head>
 
-<body>
+<body style="background-color: #212121; color: #ffff;">
     <form action="#">
-        <div class="year">
-            <label for="">Choose Session:</label>
-            <select name="" id="">
-                <option value="0"></option>
-            </select>
+        <div class="program">
+            <label for="">Session:</label>
+            <input type="text" id="year">
         </div>
         <div class="program">
             <label for="">Choose Course:</label>
@@ -27,6 +24,24 @@
             <select name="" id="sem">
                 <option value=""></option>
             </select>
+        </div>
+        <div class="program">
+            <label for="slot">Choose Slot:</label>
+            <select name="" id="slot">
+                <option value=""></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+        <div class="program">
+            <label for="">Session Start Date: </label>
+            <input type="date" name="s_date" id="s_date">
+        </div>
+        <div class="program">
+            <label for="e_date">Session End Date: </label>
+            <input type="date" name="e_date" id="e_date" max="+0D">
         </div>
     </form>
 </body>

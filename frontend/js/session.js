@@ -1,7 +1,13 @@
+const date = new Date();
+const year = document.getElementById('year');
 const course = document.getElementById('course');
 const sem = document.getElementById('sem');
 
-// this is for #course dropdown on /frontend/html/session.html
+// this for session value
+let currentYear = date.getFullYear();
+year.setAttribute('value', `${currentYear} - ${currentYear + 1}`);
+
+// this is for #course dropdown
 fetch("../../backend/php/session.php")
     .then((response) => {
         return response.json()
@@ -30,7 +36,7 @@ course.addEventListener("change", (e)=>{
         return response.json()
     })
     .then((data) => {
-        console.log(data[0]);
+        // console.log(data[0]);
         sem.innerHTML = '';
         for (let i = 1; i <= data[0]; i++) {
             const sem_option = document.createElement('option');

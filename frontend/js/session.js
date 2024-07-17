@@ -45,6 +45,6 @@ course.addEventListener("change", (e)=>{
             sem.appendChild(sem_option);
             
         }
-    })
-    
+    })  
 })
+

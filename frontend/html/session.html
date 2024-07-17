@@ -11,23 +11,23 @@
     <form action="#">
         <div class="program">
             <label for="">Session:</label>
-            <input type="text" id="year">
+            <input type="text" id="year" name="year">
         </div>
         <div class="program">
             <label for="">Choose Course:</label>
-            <select name="" id="course">
+            <select id="course" name="course">
                 <option value=""></option>
             </select>
         </div>
         <div class="program">
             <label for="">Choose Semester:</label>
-            <select name="" id="sem">
+            <select id="sem" name="sem" >
                 <option value=""></option>
             </select>
         </div>
         <div class="program">
             <label for="slot">Choose Slot:</label>
-            <select name="" id="slot">
+            <select id="slot" name="slot" >
                 <option value=""></option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -43,6 +43,11 @@
             <label for="e_date">Session End Date: </label>
             <input type="date" name="e_date" id="e_date">
         </div>
+        <div class="sub_btn_program">
+            <button type="submit" value="submit">Submit</button>
+            <button type="reset">Reset</button>
+        </div>
+
     </form>
 </body>
 <script src="../js/session.js"></script>

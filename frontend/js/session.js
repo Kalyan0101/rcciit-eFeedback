@@ -2,6 +2,7 @@ const date = new Date();
 const year = document.getElementById('year');
 const course = document.getElementById('course');
 const sem = document.getElementById('sem');
+const sub_btn = document.getElementById('sub_btn');
 
 // this for session value
 let currentYear = date.getFullYear();
@@ -47,4 +48,28 @@ course.addEventListener("change", (e)=>{
         }
     })  
 })
+sub_btn.addEventListener('click', (e) => {
+    e.preventDefault();    
 
+    const formData = new FormData(document.getElementById('session_form'));
+    fetch("../../backend/php/session.php",{
+        method : 'POST',
+        body : formData
+    })
+    .then( (response) => {
+        return response.json();
+    })
+    .then( (data) => {
+
+        // trigger when 
+        if(data.status == 0){
+            Swal.fire({
+                title: 'Error!',
+                text: 'Something Went Wrong!!!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    })
+
+})

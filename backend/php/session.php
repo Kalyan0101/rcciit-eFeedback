@@ -13,8 +13,8 @@
         echo json_encode($noc);        
     }
 
-    // this will take course data as input and fetch sem duration according input from database
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course'])){
+    // this will take course data as input and fetch >>sem duration<< according input from database
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course']) && $_POST['course'] ){
         // print_r($_POST);
         $course = $_POST['course'];
 
@@ -25,6 +25,30 @@
 
         echo json_encode($noc);
     }
+    
+    // if( $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sem']) && $_POST['sem'] && isset($_POST['slot']) && $_POST['slot'] ){
+    if( $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sem']) && isset($_POST['slot'])){
+
+        // creating response array
+        $response['status'] = 0;
         
+        $year = $_POST['year'];
+        $year = $_POST['sem'];
+        $year = $_POST['slot'];
+        $year = $_POST['s_date'];
+        $year = $_POST['e_date'];
+
+        $sql1 = "CREATE TABLE IF NOT EXISTS `e_feedback_rcciit`.`session master`(
+            `s_id` VARCHAR(5) NOT NULL COMMENT 'session id',
+            `desc` VARCHAR(50) NOT NULL COMMENT 'session description',
+            PRIMARY KEY(`s_id`) 
+            )";
+        $qr1 = mysqli_query($conn, $sql1);
+        
+        if(!$qr1){
+            echo json_encode($response);
+            // die(mysqli_connect_error($conn));
+        }
+    }
         
 ?>

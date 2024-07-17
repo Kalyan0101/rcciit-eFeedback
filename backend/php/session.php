@@ -3,18 +3,17 @@
 
     // print_r($_GET);
 
-    if($_SERVER['REQUEST_METHOD'] === 'GET'){
-
-        
+    //  this will provide initial data from database to start interaction trigger on first load
+    if($_SERVER['REQUEST_METHOD'] === 'GET'){        
         $sql = "SELECT * FROM program_master";
         $qr = mysqli_query($conn, $sql) or die(mysqli_connect_error($qr));
         $noc = mysqli_fetch_all($qr, MYSQLI_NUM);
         
         // print_r($noc);
-        echo json_encode($noc);
-        
+        echo json_encode($noc);        
     }
 
+    // this will take course data as input and fetch sem duration according input from database
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course'])){
         // print_r($_POST);
         $course = $_POST['course'];

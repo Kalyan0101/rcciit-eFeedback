@@ -1,5 +1,7 @@
 <?php
-session_start();
+// session_start();
+mysqli_report(MYSQLI_REPORT_OFF);
+
 $servername = "localhost";
 $username = "root";
 $password = "";

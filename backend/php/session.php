@@ -14,7 +14,7 @@
     }
 
     // this will take course data as input and fetch >>sem duration<< according input from database
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course']) && $_POST['course'] ){
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course']) && !isset($_POST['sem']) )  {
         // print_r($_POST);
         $course = $_POST['course'];
 
@@ -30,24 +30,40 @@
     if( $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sem']) && isset($_POST['slot'])){
 
         // creating response array
-        $response['status'] = 0;
+        $response['code'] = 0;
+        $response['msg'] = '';
         
-        $year = $_POST['year'];
-        $year = $_POST['sem'];
-        $year = $_POST['slot'];
-        $year = $_POST['s_date'];
-        $year = $_POST['e_date'];
+        $year = $_POST['year']; // session year
+        $course = $_POST['course']; // session course
+        $sem = $_POST['sem'];   // session semester
+        $slot = $_POST['slot']; // session slot
+        $s_date = $_POST['s_date']; // session start date
+        $e_date = $_POST['e_date']; // session end date
 
         $sql1 = "CREATE TABLE IF NOT EXISTS `e_feedback_rcciit`.`session master`(
-            `s_id` VARCHAR(5) NOT NULL COMMENT 'session id',
-            `desc` VARCHAR(50) NOT NULL COMMENT 'session description',
+            `s_id` VARCHAR(25) NOT NULL COMMENT 'session id',
+            `s_desc` VARCHAR(50) NOT NULL COMMENT 'session description',
+            `s_srt_date` VARCHAR(10) NOT NULL COMMENT 'session start date',
+            `s_end_date` VARCHAR(10) NOT NULL COMMENT 'session end date',
             PRIMARY KEY(`s_id`) 
             )";
         $qr1 = mysqli_query($conn, $sql1);
         
-        if(!$qr1){
+        $id = $course.$sem.$slot;
+        $desc_value = $year.'_'.$course.'_'.$sem.'_'.$slot;
+
+        $sql2 = "INSERT INTO `session master` 
+        VALUES ('$id', '$desc_value', '$s_date', '$e_date')";
+        $qr2 = mysqli_query($conn, $sql2);
+
+        // if insert query was not executed sucessfully
+        if(!$qr2){
+            $response['msg'] = 'Duplicate Entry';
             echo json_encode($response);
-            // die(mysqli_connect_error($conn));
+        }else{
+            $response['code'] = 1;            
+            $response['msg'] = 'New Session Created';
+            echo json_encode($response);
         }
     }
         

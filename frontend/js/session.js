@@ -49,7 +49,7 @@ course.addEventListener("change", (e)=>{
     })  
 })
 sub_btn.addEventListener('click', (e) => {
-    e.preventDefault();    
+    e.preventDefault();
 
     const formData = new FormData(document.getElementById('session_form'));
     fetch("../../backend/php/session.php",{
@@ -61,13 +61,32 @@ sub_btn.addEventListener('click', (e) => {
     })
     .then( (data) => {
 
-        // trigger when 
-        if(data.status == 0){
+        // trigger when some error occurs
+        if(data.code == 0){
             Swal.fire({
                 title: 'Error!',
-                text: 'Something Went Wrong!!!',
+                text: data.msg,
                 icon: 'error',
                 confirmButtonText: 'OK'
+            });
+        }
+
+        // trigger while success
+        if(data.code == 1){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: data.msg // new session created
             });
         }
     })

@@ -1,13 +1,42 @@
 <?php
     include("./config.php");
 
-    // print_r($_GET);
+    // creating response array
+    $response['code'] = '0';
+    $response['msg'] = '';
+
+    // data showing
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['session_data_call'])){
+
+        $qr = mysqli_query($conn, 'SELECT 1 FROM `session master`');
+        if($qr){
+            // if table found with enties
+            
+            $sql3 = 'SELECT * FROM `session master`';
+            $qr3 = mysqli_query($conn, $sql3);
+            $noc = mysqli_fetch_all($qr3);
+            if($noc){
+                echo json_encode($noc);
+            }else{
+                // found table with 0 records \less chance/
+                $response['code'] = '10';
+                $response['msg'] = 'Empty Table';
+                echo json_encode($response);
+            }
+            
+        }else{
+            // if table not created yet
+            $response['code'] = '00';
+            $response['msg'] = 'Table Not Found';
+            echo json_encode($response);
+        }
+    }
 
     //  this will provide initial data from database to start interaction trigger on first load
     if($_SERVER['REQUEST_METHOD'] === 'GET'){        
         $sql = "SELECT * FROM program_master";
         $qr = mysqli_query($conn, $sql) or die(mysqli_connect_error($qr));
-        $noc = mysqli_fetch_all($qr, MYSQLI_NUM);
+        $noc = mysqli_fetch_all($qr);
         
         // print_r($noc);
         echo json_encode($noc);        
@@ -20,7 +49,7 @@
 
         $sql = "SELECT p_sem FROM program_master WHERE p_name = '$course'";
         $qr = mysqli_query($conn, $sql) or die(mysqli_connect_errno($conn));
-        $noc = mysqli_fetch_array($qr, MYSQLI_NUM);
+        $noc = mysqli_fetch_array($qr);
         // print_r($noc);
 
         echo json_encode($noc);
@@ -28,10 +57,6 @@
     
     // if( $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sem']) && $_POST['sem'] && isset($_POST['slot']) && $_POST['slot'] ){
     if( $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sem']) && isset($_POST['slot'])){
-
-        // creating response array
-        $response['code'] = 0;
-        $response['msg'] = '';
         
         $year = $_POST['year']; // session year
         $course = $_POST['course']; // session course
@@ -49,7 +74,8 @@
             )";
         $qr1 = mysqli_query($conn, $sql1);
         
-        $id = $course.$sem.$slot;
+
+        $id = substr($year, 2, 2).$course.$sem.$slot;
         $desc_value = $year.'_'.$course.'_'.$sem.'_'.$slot;
 
         $sql2 = "INSERT INTO `session master` 
@@ -61,7 +87,7 @@
             $response['msg'] = 'Duplicate Entry';
             echo json_encode($response);
         }else{
-            $response['code'] = 1;            
+            $response['code'] = '1';            
             $response['msg'] = 'New Session Created';
             echo json_encode($response);
         }

@@ -3,16 +3,18 @@ const year = document.getElementById('year');
 const course = document.getElementById('course');
 const sem = document.getElementById('sem');
 const sub_btn = document.getElementById('sub_btn');
-const t_body = document.getElementById('t_body'); 
+const t_body = document.getElementById('t_body');
 
-// this for session value
+// this for session value eg: 2024 - 2025
 let currentYear = date.getFullYear();
 year.setAttribute('value', `${currentYear} - ${currentYear + 1}`);
 
-// for showing data on page
-sub_btn.addEventListener('click', () => {
+// call the function first time for showing the data on page
+sessionData(); 
 
-    const data = new FormData();
+// for showing data on page
+function sessionData() {
+    let data = new FormData();
     data.append('session_data_call', '1');
     fetch("../../backend/php/session.php", {
         method: "POST",
@@ -23,17 +25,34 @@ sub_btn.addEventListener('click', () => {
         return response.json();
     })
     .then((data) => {
-        if(data.code == '00' || data.code == '10'){
+        if (data.code == '00' || data.code == '10') {
             console.log(data.msg);
         }
         if (data.code != '00' && data.code != '10') {
-            console.log(data);
+            let table = '';
+            data.map((outterARRAY) => outterARRAY)
+            .map((innerArray) => {
+                // console.log(innerArray);
+                const myArray = innerArray[1].split('_');
+                // preparing table row for display
+                table += `<tr>
+                        <td>${myArray[0]}</td>
+                        <td>${myArray[1]}</td>
+                        <td>${myArray[2]}</td>
+                        <td>${myArray[3]}</td>
+                        <td>${innerArray[2]}</td>
+                        <td>${innerArray[3]}</td>
+                        <td>${innerArray[4]}</td>
+                        <td><button type="button" class="btn btn-primary">Edit</button></td>
+                    </tr>`;
+                })
+            t_body.innerHTML = table;                
         }
     })
-});
-    
-    
-    
+};
+
+
+
 
 
 
@@ -84,6 +103,8 @@ course.addEventListener("change", (e) => {
             }
         })
 })
+
+// submit form data to backend
 sub_btn.addEventListener('click', (e) => {
     e.preventDefault();
 
@@ -115,9 +136,10 @@ sub_btn.addEventListener('click', (e) => {
         return false;
     }
 
-
-
     const formData = new FormData(document.getElementById('session_form'));
+    const currDate = date.toDateString();
+
+    formData.append('s_cre_date', currDate);
     fetch("../../backend/php/session.php", {
         method: 'POST',
         body: formData
@@ -128,7 +150,7 @@ sub_btn.addEventListener('click', (e) => {
         .then((data) => {
 
             // trigger when some error occurs
-            if (data.code == '0') {
+            if (data.code == '01' || data.code == '02') {
                 Swal.fire({
                     title: 'Error!',
                     text: data.msg,
@@ -138,7 +160,7 @@ sub_btn.addEventListener('click', (e) => {
             }
 
             // trigger while success
-            if (data.code == '1') {
+            if (data.code == '12') {
                 const Toast = Swal.mixin({
                     toast: true,
                     position: "top-end",
@@ -155,6 +177,9 @@ sub_btn.addEventListener('click', (e) => {
                     title: data.msg // new session created
                 });
             }
+        })
+        .then( () => {
+            sessionData();
         })
 
 })

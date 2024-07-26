@@ -4,6 +4,7 @@ const course = document.getElementById('course');
 const sem = document.getElementById('sem');
 const sub_btn = document.getElementById('sub_btn');
 const t_body = document.getElementById('t_body');
+const edit_btn = document.getElementById('edit_btn');
 
 // this for session value eg: 2024 - 2025
 let currentYear = date.getFullYear();
@@ -29,6 +30,7 @@ function sessionData() {
             console.log(data.msg);
         }
         if (data.code != '00' && data.code != '10') {
+            let i = 0;
             let table = '';
             data.map((outterARRAY) => outterARRAY)
             .map((innerArray) => {
@@ -36,6 +38,7 @@ function sessionData() {
                 const myArray = innerArray[1].split('_');
                 // preparing table row for display
                 table += `<tr>
+                        <td>${++i}</td>
                         <td>${myArray[0]}</td>
                         <td>${myArray[1]}</td>
                         <td>${myArray[2]}</td>
@@ -43,7 +46,7 @@ function sessionData() {
                         <td>${innerArray[2]}</td>
                         <td>${innerArray[3]}</td>
                         <td>${innerArray[4]}</td>
-                        <td><button type="button" class="btn btn-primary">Edit</button></td>
+                        <td><button type="button" class="btn btn-primary" onclick=edit_session(\'${innerArray[0]}\')>Edit</button></td>
                     </tr>`;
                 })
             t_body.innerHTML = table;                
@@ -51,17 +54,9 @@ function sessionData() {
     })
 };
 
-
-
-
-
-
-
-
-
-
-
-
+function edit_session(id){
+    window.location.href=`./sessionEdit.html?id=${id}`;
+}
 
 // this is for #course dropdown
 fetch("../../backend/php/session.php")

@@ -14,7 +14,7 @@ if($_POST['name'] && $_POST['no_sem']){
 
     // check program name already used or not
     $sql = "SELECT p_id FROM e_feedback_rcciit.program_master WHERE p_name = '$pro_name';";
-    $qr = mysqli_query($conn, $sql) or die(mysqli_error($qr));
+    $qr = mysqli_query($conn, $sql);
     $noc = mysqli_num_rows($qr);
     if(!$noc){
         // insert new record

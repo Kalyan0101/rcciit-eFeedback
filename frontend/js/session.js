@@ -5,6 +5,7 @@ const sem = document.getElementById('sem');
 const sub_btn = document.getElementById('sub_btn');
 const t_body = document.getElementById('t_body');
 const edit_btn = document.getElementById('edit_btn');
+const reset = document.querySelector('.btn-danger');
 
 // this for session value eg: 2024 - 2025
 let currentYear = date.getFullYear();
@@ -19,7 +20,7 @@ for (let i = (currentYear-5); i <= (currentYear+2); i++ ){
     if(i == currentYear){
         session_option.setAttribute('selected', true);
     }
-    
+
     year.appendChild(session_option);
 }
 
@@ -194,4 +195,8 @@ sub_btn.addEventListener('click', (e) => {
             document.getElementById('session_form').reset();            
         })
 
+})
+
+reset.addEventListener('click', () => {
+    window.location.reload();
 })

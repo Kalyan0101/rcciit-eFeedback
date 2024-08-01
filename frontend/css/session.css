@@ -1,0 +1,19 @@
+.container{
+    box-sizing: border-box;
+    border: 2px solid white;
+    padding: 15px;
+}
+.row_btn{
+    display: flex;
+    flex-direction: column;
+}
+#sub_btn{
+    width: 20%;
+    align-self:center;
+    margin-top: 15px;
+}
+#e_date, #s_date{
+    width: 142px;
+    border-radius: 5px;
+    padding: 5px;
+}

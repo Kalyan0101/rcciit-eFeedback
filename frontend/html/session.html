@@ -10,10 +10,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head> 
+    <link rel="stylesheet" href="../css/session.css">
 
-<body style="color: #fff; background-color: #212121;" >
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body style="color: #fff; background-color: #212121;">
 
     <table class="table" style="color: #fff;">
         <thead>
@@ -31,7 +33,7 @@
         </thead>
         <tbody id="t_body">
             <tr>
-                <th >1</th>
+                <th>1</th>
                 <td>Demo</td>
                 <td>Demo</td>
                 <td>Demo</td>
@@ -43,46 +45,51 @@
         </tbody>
     </table>
 
-    <form id="session_form">
-        <div class="program">
-            <label for="year">Session:</label>
-            <input type="text" id="year" name="year" required>
+    <form id="session_form" class="container">
+        <div class="row">
+            <!-- session -->
+            <div class="program col">
+                <select class="form-select" id="year" name="year" aria-label="Default select example">
+                    <option selected>Session</option>
+                </select>
+            </div>
+            <!-- department -->
+            <div class="program col">
+                <select id="course" class="form-select" name="course" aria-label="Default select example">
+                    <option value="">Department</option>
+                </select>
+            </div>
+            <!-- semester -->
+            <div class="program col">
+                <select id="sem" class="form-select" name="sem" aria-label="Default select example">
+                    <option value="">Semester</option>
+                </select>
+            </div>
+            <!-- slot -->
+            <div class="program col">
+                <select id="slot" class="form-select" name="slot" aria-label="Default select example">
+                    <option value="">Slot</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+            <div class="program col">
+                <label for="s_date">Session Start Date: </label>
+                <input type="date" name="s_date" id="s_date" required>
+            </div>
+            <div class="program col">
+                <label for="e_date">Session End Date: </label>
+                <input type="date" name="e_date" id="e_date" required>
+            </div>
+            <div class="sub_btn_program col">
+                <button class="btn btn-danger" type="reset">RESET</button>
+            </div>
+            <div class="row row_btn">
+                <button id="sub_btn" class="btn btn-success btn-lg" type="submit" value="submit">+Add</button>
+            </div>
         </div>
-        <div class="program">
-            <label for="course">Choose Course:</label>
-            <select id="course" name="course" required>
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="program">
-            <label for="sem">Choose Semester:</label>
-            <select id="sem" name="sem" required>
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="program">
-            <label for="slot">Choose Slot:</label>
-            <select id="slot" name="slot" required>
-                <option value=""></option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-        </div>
-        <div class="program">
-            <label for="s_date">Session Start Date: </label>
-            <input type="date" name="s_date" id="s_date" required>
-        </div>
-        <div class="program">
-            <label for="e_date">Session End Date: </label>
-            <input type="date" name="e_date" id="e_date" required>
-        </div>
-        <div class="sub_btn_program">
-            <button type="submit" value="submit" id="sub_btn">Submit</button>
-            <button type="reset">Reset</button>
-        </div>
-
     </form>
 </body>
 <script src="../js/session.js"></script>

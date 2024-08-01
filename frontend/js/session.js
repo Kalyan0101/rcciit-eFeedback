@@ -8,6 +8,21 @@ const edit_btn = document.getElementById('edit_btn');
 
 // this for session value eg: 2024 - 2025
 let currentYear = date.getFullYear();
+// console.log(currentYear-5);
+// console.log(currentYear+2);
+for (let i = (currentYear-5); i <= (currentYear+2); i++ ){
+    // console.log(i);
+    const session_option = document.createElement('option');
+    session_option.setAttribute('value', `${i} - ${i+1}`);
+    session_option.innerText = `${i} - ${i+1}`;
+
+    if(i == currentYear){
+        session_option.setAttribute('selected', true);
+    }
+    
+    year.appendChild(session_option);
+}
+
 year.setAttribute('value', `${currentYear} - ${currentYear + 1}`);
 
 // call the function first time for showing the data on page
@@ -54,11 +69,12 @@ function sessionData() {
     })
 };
 
+//  redirected to another page with some values 
 function edit_session(id){
     window.location.href=`./sessionEdit.html?id=${id}`;
 }
 
-// this is for #course dropdown
+// this is for #course/department dropdown
 fetch("../../backend/php/session.php")
     .then((response) => {
         return response.json()
@@ -75,6 +91,7 @@ fetch("../../backend/php/session.php")
         }
 
     })
+//  for semester dropdown
 course.addEventListener("change", (e) => {
     let formData = new FormData();
     formData.append("course", e.target.value);
@@ -87,7 +104,6 @@ course.addEventListener("change", (e) => {
             return response.json()
         })
         .then((data) => {
-            // console.log(data[0]);
             sem.innerHTML = '';
             for (let i = 1; i <= data[0]; i++) {
                 const sem_option = document.createElement('option');
@@ -99,7 +115,7 @@ course.addEventListener("change", (e) => {
         })
 })
 
-// submit form data to backend
+// form data submited to backend for creating new session
 sub_btn.addEventListener('click', (e) => {
     e.preventDefault();
 
@@ -175,6 +191,7 @@ sub_btn.addEventListener('click', (e) => {
         })
         .then( () => {
             sessionData();
+            document.getElementById('session_form').reset();            
         })
 
 })

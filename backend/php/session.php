@@ -43,7 +43,7 @@
         echo json_encode($noc);        
     }
 
-    // this will take course data as input and fetch >>sem duration<< according input from database
+    // this will take course data as input and fetch >>>sem duration<<< according input from database
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course']) && !isset($_POST['sem']) )  {
         // print_r($_POST);
         $course = $_POST['course'];
@@ -79,7 +79,9 @@
         // if table created
         if($qr1){           
             
-            $id = substr($year, 2, 2).$course.$sem.$slot;
+            $format_course = join("", explode(" ",$course)); // remove white spaceses from the string
+
+            $id = substr($year, 2, 2).$format_course.$sem.$slot;
             $desc_value = $year.'_'.$course.'_'.$sem.'_'.$slot;
             
             $sql2 = "INSERT INTO `session master`

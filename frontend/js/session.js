@@ -1,202 +1,147 @@
-const date = new Date();
-const year = document.getElementById('year');
-const course = document.getElementById('course');
-const sem = document.getElementById('sem');
-const sub_btn = document.getElementById('sub_btn');
+const url_para = new URLSearchParams(window.location.search);
+
 const t_body = document.getElementById('t_body');
-const edit_btn = document.getElementById('edit_btn');
-const reset = document.querySelector('.btn-danger');
+const add_qsn_btn = document.getElementById('add_qsn_btn');
 
-// this for session value eg: 2024 - 2025
-let currentYear = date.getFullYear();
-// console.log(currentYear-5);
-// console.log(currentYear+2);
-for (let i = (currentYear-5); i <= (currentYear+2); i++ ){
-    // console.log(i);
-    const session_option = document.createElement('option');
-    session_option.setAttribute('value', `${i} - ${i+1}`);
-    session_option.innerText = `${i} - ${i+1}`;
-
-    if(i == currentYear){
-        session_option.setAttribute('selected', true);
-    }
-
-    year.appendChild(session_option);
-}
-
-year.setAttribute('value', `${currentYear} - ${currentYear + 1}`);
-
-// call the function first time for showing the data on page
-sessionData(); 
-
-// for showing data on page
-function sessionData() {
-    let data = new FormData();
-    data.append('session_data_call', '1');
+// if there is valid id found in the URL then fetch it and create table into DB accordingly
+if (url_para.has('id')) {
+    const id = url_para.get('id');
+    let f_data = new FormData();
+    f_data.append("id", id);
     fetch("../../backend/php/session.php", {
         method: "POST",
-        body: data,
+        body: f_data,
         mode: "no-cors"
     })
-    .then((response) => {
-        return response.json();
-    })
-    .then((data) => {
-        if (data.code == '00' || data.code == '10') {
-            console.log(data.msg);
-        }
-        if (data.code != '00' && data.code != '10') {
-            let i = 0;
-            let table = '';
-            data.map((outterARRAY) => outterARRAY)
-            .map((innerArray) => {
-                // console.log(innerArray);
-                const myArray = innerArray[1].split('_');
-                // preparing table row for display
-                table += `<tr>
-                        <td>${++i}</td>
-                        <td>${myArray[0]}</td>
-                        <td>${myArray[1]}</td>
-                        <td>${myArray[2]}</td>
-                        <td>${myArray[3]}</td>
-                        <td>${innerArray[2]}</td>
-                        <td>${innerArray[3]}</td>
-                        <td>${innerArray[4]}</td>
-                        <td><button type="button" class="btn btn-primary" onclick=edit_session(\'${innerArray[0]}\')>Edit</button></td>
-                    </tr>`;
-                })
-            t_body.innerHTML = table;                
-        }
-    })
-};
+        .then((res) => {
+            return res.json();
+        })
+        .then((data) => {
+            console.log(data);
 
-//  redirected to another page with some values 
-function edit_session(id){
-    window.location.href=`./sessionEdit.html?id=${id}`;
+        })
+} else {
+    Swal.fire({
+        title: "Do Not Change The URL Variable!!!",
+        text: "You won't be able to access this page!",
+        icon: "error",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Go Back!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = './sessionMaster.html'
+        }
+    });
 }
 
-// this is for #course/department dropdown
-fetch("../../backend/php/session.php")
-    .then((response) => {
-        return response.json()
-    })
-    .then((data) => {
-        // console.log(data);
-        // console.log(data.length);
-        for (let i = 0; i < data.length; i++) {
-            // console.log(data[i]);
-            const cor_option = document.createElement('option');
-            cor_option.setAttribute('value', data[i][1]);
-            cor_option.innerText = data[i][1];
-            course.appendChild(cor_option);
+question_data();
+
+add_qsn_btn.addEventListener('click', async () => {
+
+    const { value: text } = await Swal.fire({
+        input: "textarea",
+        inputLabel: "Enter Question",
+        inputPlaceholder: "Type question here...",
+        inputAttributes: {
+            "aria-label": "Type question here"
+        },
+        showCancelButton: true
+    });
+    if (text) {
+        const f_data = new FormData();
+        f_data.append('question', text);
+        fetch("../../backend/php/session.php", {
+            method: "POST",
+            body: f_data,
+            mode: "no-cors"
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                if (data.code == '01' || data.code == '02') {
+                    Swal.fire({
+                        icon: "error",
+                        title: `<span class="error">${data.msg}</span>`,
+
+                    });
+                }
+                if (data.code == '12') {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: "New Question Added."
+                    });
+                    question_data(); // call after every successfully addition of question
+                }
+            })
+    }
+})
+
+// ############################ function ###################################
+
+// responsible for showing data on page
+function question_data() {
+    fetch("../../backend/php/session.php")
+        .then((res) => {
+            return res.json();
+        })
+        .then((data) => {
+            if (data.code != '03') {
+                let i = 0;
+                let table_data = '';
+                data.map((outerArray) => outerArray)
+                    .map((innerArray) => {
+                        table_data += `<tr>
+                            <td>${++i}</td>
+                            <td>${innerArray[1]}</td>
+                            <td>
+                                <button onclick=delete_qns(\'${innerArray[0]}\') class="btn_img"><img src="../img/delete_logo.svg" alt=""></button>
+                            </td>
+                        </tr>`
+                    })
+                t_body.innerHTML = table_data;
+            }
+        })
+}
+
+// responsible for deleting question
+function delete_qns(id) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            let f_data = new FormData();
+            f_data.append('delete_id', id);
+            fetch("../../backend/php/session.php", {
+                method: "POST",
+                body: f_data,
+                mode: "no-cors"
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    question_data();  // update view of question table
+                })
         }
-
     })
-//  for semester dropdown
-course.addEventListener("change", (e) => {
-    let formData = new FormData();
-    formData.append("course", e.target.value);
-    // console.log(e.target.value);
-    fetch("../../backend/php/session.php", {
-        method: "POST",
-        body: formData
-    })
-        .then((response) => {
-            return response.json()
-        })
-        .then((data) => {
-            sem.innerHTML = '';
-            for (let i = 1; i <= data[0]; i++) {
-                const sem_option = document.createElement('option');
-                sem_option.setAttribute('value', i);
-                sem_option.innerText = i;
-                sem.appendChild(sem_option);
 
-            }
-        })
-})
-
-// form data submited to backend for creating new session
-sub_btn.addEventListener('click', (e) => {
-    e.preventDefault();
-
-    const session = document.getElementById('year');
-    const sem = document.getElementById('sem');
-    const slot = document.getElementById('slot');
-    const s_date = document.getElementById('s_date');
-    const e_date = document.getElementById('e_date');
-
-    // form validation
-    if (session.value == "") {
-        session.focus();
-        return false;
-    }
-    if (sem.value == "") {
-        sem.focus();
-        return false;
-    }
-    if (slot.value == "") {
-        slot.focus();
-        return false;
-    }
-    if (s_date.value == "") {
-        s_date.focus();
-        return false;
-    }
-    if (e_date.value == "") {
-        e_date.focus();
-        return false;
-    }
-
-    const formData = new FormData(document.getElementById('session_form'));
-    const currDate = date.toDateString();
-
-    formData.append('s_cre_date', currDate);
-    fetch("../../backend/php/session.php", {
-        method: 'POST',
-        body: formData
-    })
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-
-            // trigger when some error occurs
-            if (data.code == '01' || data.code == '02') {
-                Swal.fire({
-                    title: 'Error!',
-                    text: data.msg,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
-
-            // trigger while success
-            if (data.code == '12') {
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    icon: "success",
-                    title: data.msg // new session created
-                });
-            }
-        })
-        .then( () => {
-            sessionData();
-            document.getElementById('session_form').reset();            
-        })
-
-})
-
-reset.addEventListener('click', () => {
-    window.location.reload();
-})
+}

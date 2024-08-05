@@ -1,19 +1,27 @@
-.container{
-    box-sizing: border-box;
-    border: 2px solid white;
-    padding: 15px;
+.error{
+    color: red;
 }
-.row_btn{
-    display: flex;
-    flex-direction: column;
+.t_head{
+    position: sticky;
+    top: 0px;
+    background-color: cornflowerblue;
 }
-#sub_btn{
-    width: 20%;
-    align-self:center;
-    margin-top: 15px;
+.table-container {
+    max-height: 560px; /* Adjust this value as needed */
+    overflow-y: auto; /* Enables vertical scrolling */
+    display: block; /* Ensures the container is a block-level element */
 }
-#e_date, #s_date{
-    width: 142px;
-    border-radius: 5px;
-    padding: 5px;
+.btn_img {
+    border: none; /* Removes default button border */
+    background: none; /* Removes default button background */
+    padding: 0; /* Removes default padding */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+    background-color: none;
+}
+
+.btn_img img {
+    display: block; /* Removes space below image */
+    width: 100%; /* Adjust width as needed */
+    height: auto; /* Adjust height as needed */
+    background-color: red;
 }

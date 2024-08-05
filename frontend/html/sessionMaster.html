@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/sessionMaster.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body style="color: #fff; background-color: #212121;">
+
+    <table class="table" style="color: #fff;">
+        <thead>
+            <tr>
+                <th scope="col">Serial no.</th>
+                <th scope="col">Session</th>
+                <th scope="col">Department</th>
+                <th scope="col">Semester</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Session Start Date</th>
+                <th scope="col">Session End Date</th>
+                <th scope="col">Session Creation Date</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody id="t_body">
+            <tr>
+                <th>1</th>
+                <td>Demo</td>
+                <td>Demo</td>
+                <td>Demo</td>
+                <td>Demo</td>
+                <td>Demo</td>
+                <td>Demo</td>
+                <td><button type="button" class="btn btn-primary">Edit</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form id="session_form" class="container">
+        <div class="row">
+            <!-- session -->
+            <div class="program col">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="year">Session: </label>
+                    <select class="form-select" id="year" name="year" aria-label="Default select example">
+                        <option selected>--select--</option>
+                    </select>
+                </div>
+            </div>
+            <!-- department -->
+            <div class="program col">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="course">Department: </label>
+                    <select id="course" class="form-select" name="course" aria-label="Default select example">
+                        <option value="">--select--</option>
+                    </select>
+                </div>
+            </div>
+            <!-- semester -->
+            <div class="program col">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="sem">Semester: </label>
+                    <select id="sem" class="form-select" name="sem" aria-label="Default select example">
+                        <option value="">--select--</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- slot -->
+            <div class="program col">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="slot">Slot: </label>
+                    <select id="slot" class="form-select" name="slot" aria-label="Default select example">
+                        <option value="">--select--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+            </div>
+            <div class="program col">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="s_date">Session Start Date: </label>
+                    <input type="date" class="form-select" name="s_date" id="s_date" required>
+                </div>
+            </div>
+            <div class="program col">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="e_date">Session End Date: </label>
+                    <input type="date" class="form-select" name="e_date" id="e_date" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="sub_btn_program col">
+                <div class="btn_grp">
+                    <button class="btn btn-danger">RESET</button>
+                    <!-- </div> -->
+                    <button id="sub_btn" class="btn btn-success btn-lg" type="submit">+Add</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+<script src="../js/sessionMaster.js"></script>
+
+</html>

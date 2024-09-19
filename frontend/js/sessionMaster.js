@@ -66,11 +66,6 @@ function sessionData() {
     })
 };
 
-//  redirected to another page with some values 
-function edit_session(id){
-    window.location.href=`./session.html?id=${id}`;
-}
-
 // this is for #course/department dropdown
 fetch("../../backend/php/sessionMaster.php")
     .then((response) => {
@@ -196,3 +191,10 @@ sub_btn.addEventListener('click', (e) => {
 reset.addEventListener('click', () => {
     window.location.reload();
 })
+
+// ############################ function ###################################
+
+//  redirected to another page with some values 
+function edit_session(id){
+    window.location.href=`./session.html?id=${id}`;
+}

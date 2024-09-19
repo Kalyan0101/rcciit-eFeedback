@@ -5,7 +5,7 @@ include("./config.php");
 $response['code'] = '';
 $response['msg'] = '';
 
-//  add new question into table after creation of the table if not exists
+//  insert new question into table after creation the table if not exists
 if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['question'])) {
 
     $question = $_POST['question'];
@@ -38,22 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['question'])) {
     }
 }
 
-// fetch all table data from DB and send response
-if($_SERVER['REQUEST_METHOD'] === "GET"){
-    $sql3 = "SELECT * FROM `question bank`";
-    $qr3 = mysqli_query($conn, $sql3);
-
-    if($qr3){
-        $data = mysqli_fetch_all($qr3);
-        echo json_encode($data);
-
-    }else{
-        $response['code'] = '03';
-        $response['msg'] = 'Table Empty';
-        echo json_encode($response);
-    }
-}
-
 //  creating session table
 if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['id'])){
 
@@ -81,22 +65,93 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['id'])){
     }
 }
 
+// creating questions set
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['q_set_name'])){
+
+
+    $sql1 = "CREATE TABLE IF NOT EXISTS `e_feedback_rcciit`.`question set` (
+        `q_s_id` INT NOT NULL AUTO_INCREMENT COMMENT 'question set id',
+        `q_name` VARCHAR(15) NOT NULL COMMENT 'question set name',
+        `question_id` VARCHAR(150) NOT NULL COMMENT 'questions id',
+        PRIMARY KEY(`q_s_id`))";
+    $qr1 = mysqli_query($conn, $sql1);
+
+    if($qr1){       
+        
+        $s_name = $_POST['q_set_name'];
+        $q_list = $_POST['q_list'];
+
+        $sql2 = "INSERT INTO `e_feedback_rcciit`.`question set` (`q_name`, `question_id`)
+        values('$s_name', '$q_list')";
+        $qr2 = mysqli_query($conn, $sql2);
+
+        if($qr2){
+
+            $response['code'] = '12';
+            $response['msg'] = 'Question set Created.';
+
+        }else{
+            $response['code'] = '02';
+            $response['msg'] = 'Error! Data Not Inserted';
+        }
+
+    }else{
+        $response['code'] = '01';
+        $response['msg'] = 'Error! Table not Created';
+    }
+    echo json_encode($response);
+}
+
 ####################################### delete question #################################
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])){
     $delete_id = $_POST['delete_id'];
 
-    $sql1 = "DELETE FROM `question bank` WHERE q_id = '$delete_id'";
+    $sql1 = "DELETE FROM `question set` WHERE q_s_id = '$delete_id'";
     $qr1 = mysqli_query($conn, $sql1);
 
     if($qr1){
         $response['code'] = '11';
         $response['msg'] = 'Question Deleted';
-        echo json_encode($response);
     }else{
         $response['code'] = '01';
         $response['code'] = 'Question Not Delete!';
+    }
+    echo json_encode($response);
+}
+
+####################################### show data #################################
+
+// fetch all table data from DB and send response
+if($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['qns']) ){
+    $sql3 = "SELECT * FROM `question bank`";
+    $qr3 = mysqli_query($conn, $sql3);
+
+    if($qr3){
+        $data = mysqli_fetch_all($qr3);
+        echo json_encode($data);
+
+    }else{
+        $response['code'] = '03';
+        $response['msg'] = 'Table Empty';
         echo json_encode($response);
     }
 }
+
+if($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['questionSet'])){
+
+    $sql1 = "SELECT * FROM `question set`";
+    $qr1 = mysqli_query($conn, $sql1);
+
+    if($qr1){
+        $data = mysqli_fetch_all($qr1);
+        echo json_encode($data);
+
+    }else{
+        $response['code'] = '01';
+        $response['msg'] = 'Table Empty';
+        echo json_encode($response);
+    }
+}
+
 
 ?>

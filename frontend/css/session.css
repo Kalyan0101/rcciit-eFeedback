@@ -6,10 +6,25 @@
     top: 0px;
     background-color: cornflowerblue;
 }
+
+.container{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.table{
+    color: #fff;
+
+}
 .table-container {
     max-height: 560px; /* Adjust this value as needed */
     overflow-y: auto; /* Enables vertical scrolling */
     display: block; /* Ensures the container is a block-level element */
+    width: 100%;
+    max-width: 50vw;
+}
+.set-container{
+    width: 100%;
 }
 .btn_img {
     border: none; /* Removes default button border */

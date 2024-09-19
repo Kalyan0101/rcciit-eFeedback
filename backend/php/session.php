@@ -121,7 +121,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])){
 
 ####################################### show data #################################
 
-// fetch all table data from DB and send response
+// fetch all question data from DB and send response
 if($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['qns']) ){
     $sql3 = "SELECT * FROM `question bank`";
     $qr3 = mysqli_query($conn, $sql3);
@@ -137,6 +137,7 @@ if($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['qns']) ){
     }
 }
 
+// fetch all question set data from DB and send response
 if($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['questionSet'])){
 
     $sql1 = "SELECT * FROM `question set`";

@@ -188,7 +188,7 @@ function question_set() {
                 let table_data = '';
                 data.map((outerArray) => outerArray)
                     .map((innerArray) => {
-                        table_data += `<tr>
+                        table_data += `<tr onclick=update_qns(\'${innerArray[0]}\') >
                             <td>${++i}</td>
                             <td>${innerArray[1]}</td>
                             <td>
@@ -199,6 +199,10 @@ function question_set() {
                 set_body.innerHTML = table_data;
             }
         })
+}
+
+function update_qns(id){
+    console.log(id);    
 }
 
 // responsible for deleting question

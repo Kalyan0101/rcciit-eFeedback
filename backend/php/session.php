@@ -154,5 +154,23 @@ if($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['questionSet'])){
     }
 }
 
+if($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['Selected_questionSet'])){
+    
+    $id = $_GET['Selected_questionSet'];
+
+    $sql = "SELECT question_id FROM `question set` WHERE q_s_id = '$id'";
+    $qr1 = mysqli_query($conn, $sql);
+
+    if($qr1){
+
+        $sql1 = "SELECT * FROM `question bank` ORDER BY CASE WHEN q_id IN ";
+
+    }else{
+        $response['code'] = '500';
+        $response['msg'] = 'Question set not Available';
+        echo json_encode($response);
+    }
+}
+
 
 ?>

@@ -192,7 +192,7 @@ function question_set() {
                             <td>${++i}</td>
                             <td>${innerArray[1]}</td>
                             <td>
-                                <button onclick=delete_qns(\'${innerArray[0]}\') class="btn_img"><img src="../img/delete_logo.svg" alt=""></button>
+                                <button onclick="event.stopPropagation(); delete_qns('${innerArray[0]}')" class="btn_img"><img src="../img/delete_logo.svg" alt=""></button>
                             </td>
                         </tr>`
                     })
@@ -202,7 +202,11 @@ function question_set() {
 }
 
 function update_qns(id){
-    console.log(id);    
+    fetch(`../../backend/php/session.php?Selected_questionSet=${id}`)
+    .then( res => res.json())
+    .then((data) => {
+        console.log(data);        
+    })
 }
 
 // responsible for deleting question
@@ -235,3 +239,6 @@ function delete_qns(id) {
         }
     })
 }
+
+
+// stop propagation 
